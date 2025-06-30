@@ -12,7 +12,7 @@
       flex-direction: column;
       align-items: center;
       margin: 0;
-      padding: 20px 5px 10px 5px; /* Yukarıdan boşluk */
+      padding: 20px 5px 10px 5px;
     }
     .row-section {
       display: flex;
@@ -33,7 +33,7 @@
       min-width: 180px;
     }
     #clock {
-      font-size: 3em; /* Biraz büyütüldü */
+      font-size: 3em;
       margin: 20px 0 5px 0;
     }
     #calendarTitle {
@@ -55,7 +55,7 @@
       font-size: 0.9em;
     }
     #motivationImg {
-      height: 180px; /* Boyut büyütüldü */
+      height: 180px;
       width: auto;
       border-radius: 8px;
       filter: grayscale(100%);
@@ -70,14 +70,14 @@
       max-width: 95%;
       text-align: center;
       line-height: 1.2;
-      max-height: 2.6em;
+      max-height: 3.5em; /* Yükseltilmiş */
       overflow: hidden;
       text-overflow: ellipsis;
       white-space: normal;
-      font-size: 0.95em; /* Büyütüldü */
+      font-size: 0.9em; /* Hafif küçültüldü */
     }
     #word, #dollar, #euro {
-      font-size: 0.95em; /* Aynı şekilde büyütüldü */
+      font-size: 0.9em;
       text-align: center;
     }
     #news {
@@ -85,7 +85,7 @@
       margin-top: 10px;
       width: 100%;
       max-width: 1000px;
-      font-size: 0.85em; /* Biraz büyütüldü */
+      font-size: 0.85em;
     }
     #news h3 {
       margin-top: 0;
@@ -140,7 +140,6 @@
   </div>
 
   <script>
-    // Saat ve tarih
     function updateClock() {
       const now = new Date();
       const options = { hour: '2-digit', minute: '2-digit' };
@@ -150,7 +149,6 @@
     setInterval(updateClock, 1000);
     updateClock();
 
-    // Takvim
     function generateCalendar() {
       const today = new Date();
       const year = today.getFullYear();
@@ -191,7 +189,6 @@
     }
     generateCalendar();
 
-    // Kurlar
     async function fetchRates() {
       try {
         const response = await fetch('https://api.exchangerate-api.com/v4/latest/USD');
@@ -207,7 +204,6 @@
     }
     fetchRates();
 
-    // Hava durumu
     async function fetchWeather() {
       try {
         const response = await fetch('https://wttr.in/Istanbul?format=%t+%c');
@@ -219,7 +215,6 @@
     }
     fetchWeather();
 
-    // Özlü sözler
     const quotes = [
       { en: "The truest guide in life is science.", tr: "Hayatta en hakiki mürşit ilimdir." },
       { en: "Punishment for speaking without thinking is to think later.", tr: "Düşünmeden konuşmanın cezası, sonradan düşünmeye mahkum olmaktır." }
@@ -231,7 +226,6 @@
     }
     showQuote();
 
-    // Kelimeler
     const words = [
       { en: "courage", tr: "cesaret" },
       { en: "focus", tr: "odaklanmak" },
@@ -252,7 +246,6 @@
     }
     showWords();
 
-    // Haberler
     async function fetchNews() {
       try {
         const response = await fetch('https://api.rss2json.com/v1/api.json?rss_url=https://www.ntv.com.tr/gundem.rss');
