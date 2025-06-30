@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <title>Akıllı Dashboard</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: #f5f7fa;
+      color: #333;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin: 0;
+      padding: 20px 5px 10px 5px; /* Yukarıdan boşluk */
+    }
+    .row-section {
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      flex-wrap: wrap;
+      gap: 20px;
+      margin-bottom: 15px;
+      width: 100%;
+      max-width: 1000px;
+    }
+    .card {
+      background: none;
+      border: none;
+      padding: 5px;
+      text-align: center;
+      flex: 1;
+      min-width: 180px;
+    }
+    #clock {
+      font-size: 3em; /* Biraz büyütüldü */
+      margin: 20px 0 5px 0;
+    }
+    #calendarTitle {
+      font-weight: bold;
+      margin-bottom: 5px;
+      font-size: 1em;
+    }
+    table {
+      margin: 0 auto;
+      border-collapse: collapse;
+      font-size: 0.7em;
+    }
+    td {
+      border: none;
+      padding: 3px;
+      width: 22px;
+      height: 16px;
+      text-align: center;
+      font-size: 0.9em;
+    }
+    #motivationImg {
+      height: 180px; /* Boyut büyütüldü */
+      width: auto;
+      border-radius: 8px;
+      filter: grayscale(100%);
+      margin-top: 0;
+      flex-shrink: 0;
+      max-width: 220px;
+    }
+    #quote {
+      padding: 5px;
+      font-style: italic;
+      font-family: 'Georgia', serif;
+      max-width: 95%;
+      text-align: center;
+      line-height: 1.2;
+      max-height: 2.6em;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: normal;
+      font-size: 0.95em; /* Büyütüldü */
+    }
+    #word, #dollar, #euro {
+      font-size: 0.95em; /* Aynı şekilde büyütüldü */
+      text-align: center;
+    }
+    #news {
+      padding: 5px;
+      margin-top: 10px;
+      width: 100%;
+      max-width: 1000px;
+      font-size: 0.85em; /* Biraz büyütüldü */
+    }
+    #news h3 {
+      margin-top: 0;
+      font-size: 1em;
+    }
+    #news ul {
+      list-style-type: none;
+      padding: 0;
+      margin: 0;
+      text-align: left;
+    }
+    #news li::before {
+      content: '📰';
+      margin-right: 5px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ÜST KISIM -->
+  <div class="row-section">
+    <div class="card">
+      <div id="clock"></div>
+      <div id="date"></div>
+      <div id="weather"></div>
+    </div>
+    <div class="card">
+      <div id="calendarTitle"></div>
+      <div id="calendar"></div>
+    </div>
+    <div class="card">
+      <img id="motivationImg" src="https://picsum.photos/250/250?random=1" alt="Motivation Image">
+    </div>
+  </div>
+
+  <!-- ALT KISIM -->
+  <div class="row-section">
+    <div class="card">
+      <div id="dollar">💵 Dolar yükleniyor...</div>
+      <div id="euro">💶 Euro yükleniyor...</div>
+    </div>
+    <div class="card" id="word"></div>
+    <div class="card" id="quote"></div>
+  </div>
+
+  <!-- HABERLER -->
+  <div id="news">
+    <h3>Son Haber Başlıkları (NTV)</h3>
+    <ul id="newsList">
+      <li>Haber yükleniyor...</li>
+    </ul>
+  </div>
+
+  <script>
+    // Saat ve tarih
+    function updateClock() {
+      const now = new Date();
+      const options = { hour: '2-digit', minute: '2-digit' };
+      document.getElementById('clock').textContent = now.toLocaleTimeString('tr-TR', options);
+      document.getElementById('date').textContent = now.toLocaleDateString('tr-TR');
+    }
+    setInterval(updateClock, 1000);
+    updateClock();
+
+    // Takvim
+    function generateCalendar() {
+      const today = new Date();
+      const year = today.getFullYear();
+      const month = today.getMonth();
+      const monthNames = ['Ocak', 'Şubat', 'Mart', 'Nisan', 'Mayıs', 'Haziran', 'Temmuz', 'Ağustos', 'Eylül', 'Ekim', 'Kasım', 'Aralık'];
+      document.getElementById('calendarTitle').textContent = `${monthNames[month]} ${year}`;
+
+      const firstDay = new Date(year, month, 1).getDay();
+      const daysInMonth = new Date(year, month + 1, 0).getDate();
+      const weekDays = ['Pt', 'Sa', 'Ça', 'Pe', 'Cu', 'Ct', 'Pz'];
+
+      let table = '<table><tr>';
+      for (let d of weekDays) {
+        table += `<td><b>${d}</b></td>`;
+      }
+      table += '</tr><tr>';
+
+      let day = 1;
+      let startDay = (firstDay === 0) ? 6 : firstDay - 1;
+
+      for (let i = 0; i < 6; i++) {
+        for (let j = 0; j < 7; j++) {
+          if (i === 0 && j < startDay) {
+            table += '<td></td>';
+          } else if (day > daysInMonth) {
+            table += '<td></td>';
+          } else {
+            table += `<td>${day}</td>`;
+            day++;
+          }
+        }
+        table += '</tr>';
+        if (day > daysInMonth) break;
+        else table += '<tr>';
+      }
+      table += '</table>';
+      document.getElementById('calendar').innerHTML = table;
+    }
+    generateCalendar();
+
+    // Kurlar
+    async function fetchRates() {
+      try {
+        const response = await fetch('https://api.exchangerate-api.com/v4/latest/USD');
+        const data = await response.json();
+        const tryRate = data.rates.TRY;
+        const euroRate = (data.rates.TRY / data.rates.EUR);
+        document.getElementById('dollar').textContent = `💵 1 USD = ${tryRate.toFixed(2)} TRY`;
+        document.getElementById('euro').textContent = `💶 1 EUR = ${euroRate.toFixed(2)} TRY`;
+      } catch (error) {
+        document.getElementById('dollar').textContent = 'Döviz alınamadı';
+        document.getElementById('euro').textContent = '';
+      }
+    }
+    fetchRates();
+
+    // Hava durumu
+    async function fetchWeather() {
+      try {
+        const response = await fetch('https://wttr.in/Istanbul?format=%t+%c');
+        const text = await response.text();
+        document.getElementById('weather').textContent = `İstanbul: ${text}`;
+      } catch (error) {
+        document.getElementById('weather').textContent = 'Hava alınamadı';
+      }
+    }
+    fetchWeather();
+
+    // Özlü sözler
+    const quotes = [
+      { en: "The truest guide in life is science.", tr: "Hayatta en hakiki mürşit ilimdir." },
+      { en: "Punishment for speaking without thinking is to think later.", tr: "Düşünmeden konuşmanın cezası, sonradan düşünmeye mahkum olmaktır." }
+    ];
+    function showQuote() {
+      const randomIndex = Math.floor(Math.random() * quotes.length);
+      const quote = quotes[randomIndex];
+      document.getElementById('quote').innerHTML = `<div>${quote.en}</div><div>${quote.tr}</div>`;
+    }
+    showQuote();
+
+    // Kelimeler
+    const words = [
+      { en: "courage", tr: "cesaret" },
+      { en: "focus", tr: "odaklanmak" },
+      { en: "growth", tr: "büyüme" },
+      { en: "strength", tr: "güç" },
+      { en: "patience", tr: "sabır" }
+    ];
+    function showWords() {
+      const randomWords = [];
+      while (randomWords.length < 2) {
+        const randomIndex = Math.floor(Math.random() * words.length);
+        const word = words[randomIndex];
+        if (!randomWords.includes(word)) {
+          randomWords.push(word);
+        }
+      }
+      document.getElementById('word').innerHTML = randomWords.map(w => `<div><strong>${w.en}</strong> - ${w.tr}</div>`).join('');
+    }
+    showWords();
+
+    // Haberler
+    async function fetchNews() {
+      try {
+        const response = await fetch('https://api.rss2json.com/v1/api.json?rss_url=https://www.ntv.com.tr/gundem.rss');
+        const data = await response.json();
+        const newsList = document.getElementById('newsList');
+        newsList.innerHTML = '';
+
+        data.items.slice(0, 3).forEach(item => {
+          const li = document.createElement('li');
+          li.textContent = item.title;
+          newsList.appendChild(li);
+        });
+      } catch (error) {
+        document.getElementById('newsList').innerHTML = '<li>Haberler alınamadı</li>';
+      }
+    }
+    fetchNews();
+  </script>
+</body>
+</html>
