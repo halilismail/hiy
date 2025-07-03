@@ -218,8 +218,8 @@
         const data = await response.json();
         const tryRate = data.rates.TRY;
         const euroRate = (data.rates.TRY / data.rates.EUR);
-        document.getElementById('dollar').textContent = `💵 USD = ${tryRate.toFixed(2)} TRY`;
-        document.getElementById('euro').textContent = `💶 EUR = ${euroRate.toFixed(2)} TRY`;
+        document.getElementById('dollar').innerHTML = `💵 USD = ${tryRate.toFixed(2)} TRY<br><br>💶 EUR = ${euroRate.toFixed(2)} TRY`;
+        document.getElementById('euro').textContent = "";
       } catch (error) {
         document.getElementById('dollar').textContent = 'Döviz alınamadı';
         document.getElementById('euro').textContent = '';
