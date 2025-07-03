@@ -37,10 +37,10 @@
       margin: 20px 0 20px 0;
     }
     #date {
-      margin-bottom: 20px; /* Saat ve hava durumu arası boşluk */
+      margin-bottom: 20px;
     }
     #weather {
-      margin-bottom: 20px; /* Tarih ve hava durumu arası boşluk */
+      margin-bottom: 20px;
     }
     #calendarTitle {
       font-weight: bold;
@@ -239,22 +239,65 @@
     fetchWeather();
 
     const quotes = [
-      { en: "The truest guide in life is science.", tr: "Hayatta en hakiki mürşit ilimdir." },
-      { en: "Punishment for speaking without thinking is to think later.", tr: "Düşünmeden konuşmanın cezası, sonradan düşünmeye mahkum olmaktır." }
+      { en: "Stay hungry, stay foolish.", tr: "Aç kal, budala kal.", author: "Steve Jobs" },
+      { en: "Less is more.", tr: "Az, çoktur.", author: "Ludwig Mies van der Rohe" },
+      { en: "Knowledge is power.", tr: "Bilgi güçtür.", author: "Francis Bacon" },
+      { en: "Action expresses priorities.", tr: "Eylem öncelikleri gösterir.", author: "Mahatma Gandhi" },
+      { en: "Simplicity is ultimate sophistication.", tr: "Sadelik en büyük inceliktir.", author: "Leonardo da Vinci" },
+      { en: "Time is money.", tr: "Zaman paradır.", author: "Benjamin Franklin" },
+      { en: "Life is either daring.", tr: "Hayat ya cesurdur ya değil.", author: "Helen Keller" },
+      { en: "Dream big. Dare bigger.", tr: "Büyük hayal et, cesur ol.", author: "Norman Vaughan" },
+      { en: "Impossible is nothing.", tr: "İmkansız yoktur.", author: "Muhammad Ali" },
+      { en: "I think, therefore I am.", tr: "Düşünüyorum, öyleyse varım.", author: "René Descartes" },
+      { en: "To be, or not.", tr: "Olmak ya da olmamak.", author: "William Shakespeare" },
+      { en: "The unexamined life worthless.", tr: "Sorgulanmamış hayat değersizdir.", author: "Sokrates" },
+      { en: "Turn your wounds wisdom.", tr: "Yaralarını bilgeliğe dönüştür.", author: "Oprah Winfrey" },
+      { en: "What we think, become.", tr: "Ne düşünürsek oyuz.", author: "Buddha" },
+      { en: "Energy and persistence conquer.", tr: "Enerji ve sebat fetheder.", author: "Benjamin Franklin" },
+      { en: "Everything you can imagine real.", tr: "Hayal edebileceğin her şey gerçektir.", author: "Pablo Picasso" },
+      { en: "Well done better said.", tr: "İyi yapılmış, iyi söylenmişten iyidir.", author: "Benjamin Franklin" },
+      { en: "Happiness depends upon ourselves.", tr: "Mutluluk kendimize bağlıdır.", author: "Aristoteles" },
+      { en: "Be yourself; else taken.", tr: "Kendin ol; diğer herkes alınmış.", author: "Oscar Wilde" },
+      { en: "What you seek seeking.", tr: "Aradığın şey, seni arıyor.", author: "Rumi (Mevlana)" }
     ];
     function showQuote() {
       const randomIndex = Math.floor(Math.random() * quotes.length);
       const quote = quotes[randomIndex];
-      document.getElementById('quote').innerHTML = `<div>${quote.en}</div><div>${quote.tr}</div>`;
+      document.getElementById('quote').innerHTML = `<div>${quote.en}</div><div>${quote.tr}</div><div><b>${quote.author}</b></div>`;
     }
     showQuote();
 
     const words = [
-      { en: "courage", tr: "cesaret" },
-      { en: "focus", tr: "odaklanmak" },
-      { en: "growth", tr: "büyüme" },
-      { en: "strength", tr: "güç" },
-      { en: "patience", tr: "sabır" }
+      { en: "achieve", tr: "başarmak" },
+      { en: "avoid", tr: "kaçınmak" },
+      { en: "borrow", tr: "ödünç almak" },
+      { en: "calm", tr: "sakin" },
+      { en: "common", tr: "yaygın, ortak" },
+      { en: "crowded", tr: "kalabalık" },
+      { en: "depend", tr: "bağlı olmak" },
+      { en: "develop", tr: "geliştirmek" },
+      { en: "disappear", tr: "ortadan kaybolmak" },
+      { en: "divide", tr: "bölmek" },
+      { en: "environment", tr: "çevre" },
+      { en: "exactly", tr: "tam olarak" },
+      { en: "finally", tr: "sonunda" },
+      { en: "foreign", tr: "yabancı" },
+      { en: "generous", tr: "cömert" },
+      { en: "guess", tr: "tahmin etmek" },
+      { en: "local", tr: "yerel" },
+      { en: "lonely", tr: "yalnız" },
+      { en: "offer", tr: "teklif etmek" },
+      { en: "prepare", tr: "hazırlamak" },
+      { en: "promise", tr: "söz vermek" },
+      { en: "protect", tr: "korumak" },
+      { en: "reach", tr: "ulaşmak" },
+      { en: "refuse", tr: "reddetmek" },
+      { en: "safe", tr: "güvenli" },
+      { en: "save", tr: "kurtarmak, biriktirmek" },
+      { en: "several", tr: "birkaç" },
+      { en: "strange", tr: "garip" },
+      { en: "suggest", tr: "önermek" },
+      { en: "usual", tr: "alışılmış" }
     ];
     function showWords() {
       const randomWords = [];
