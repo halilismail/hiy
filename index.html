@@ -100,25 +100,49 @@
       text-align: left;
       display: inline-block;
     }
-    #news {
-      padding: 5px;
-      margin-top: 5px;
-      margin-left: 55px;
-      width: 100%;
-      max-width: 1000px;
-      font-size: 0.85em;
-      max-height: 80px;
-      overflow-y: auto;
+
+    /* ✅ GÖREVLER */
+    .tasks-card{
+      text-align:left;
+      flex: 1 1 100%;
+      min-width: 280px;
+      padding: 5px 10px;
     }
-    #news ul {
-      list-style-type: none;
-      padding: 0;
-      margin: 0;
-      text-align: left;
+    .tasks-grid{
+      display:flex;
+      flex-wrap:wrap;
+      gap:18px;
     }
-    #news li::before {
-      content: '📰';
-      margin-right: 5px;
+    .task-col{
+      flex: 1 1 280px;
+      min-width: 280px;
+    }
+    .task-title{
+      font-weight:bold;
+      margin: 0 0 8px 0;
+      font-size: 0.95em;
+    }
+    .task-list{
+      list-style:none;
+      padding:0;
+      margin:0;
+      display:flex;
+      flex-direction:column;
+      gap:8px;
+      font-size:0.95em;
+      line-height:1.25;
+    }
+    .task-item{
+      display:flex;
+      align-items:flex-start;
+      gap:10px;
+    }
+    .box{
+      width:14px;
+      height:14px;
+      border:1.6px solid #333;
+      flex: 0 0 auto;
+      margin-top:2px;
     }
   </style>
 </head>
@@ -150,11 +174,43 @@
     <div class="card" id="quote"></div>
   </div>
 
-  <!-- HABERLER -->
-  <div id="news">
-    <ul id="newsList">
-      <li>Haber yükleniyor...</li>
-    </ul>
+  <!-- ✅ GÖREVLER (Haberler kaldırıldı, buraya eklendi) -->
+  <div class="row-section">
+    <div class="card tasks-card">
+      <div class="tasks-grid">
+
+        <div class="task-col">
+          <div class="task-title">İşle ilgili</div>
+          <ul class="task-list">
+            <li class="task-item"><span class="box"></span>Günde 2 saat ayakta çalış</li>
+            <li class="task-item"><span class="box"></span>Bir sonraki günü programla</li>
+            <li class="task-item"><span class="box"></span>2 savunma sanayi firması ile görüş</li>
+            <li class="task-item"><span class="box"></span>Data centere 2 yeni müşteri taşı</li>
+          </ul>
+        </div>
+
+        <div class="task-col">
+          <div class="task-title">Kişisel</div>
+          <ul class="task-list">
+            <li class="task-item"><span class="box"></span>Piyanoda bir parçayı baştan sona çal</li>
+            <li class="task-item"><span class="box"></span>Vitray boyamada ilk eserini hazırla</li>
+            <li class="task-item"><span class="box"></span>İki kilo ver</li>
+            <li class="task-item"><span class="box"></span>LinkedIn’de iki yazı yaz</li>
+          </ul>
+        </div>
+
+        <div class="task-col">
+          <div class="task-title">Aile</div>
+          <ul class="task-list">
+            <li class="task-item"><span class="box"></span>Çocukların ders çalışma sistemini kur</li>
+            <li class="task-item"><span class="box"></span>Tüm aile fertleri bir kitap bitirecek</li>
+            <li class="task-item"><span class="box"></span>Çocuklar için bu aylık bir ilgi alanı belirle</li>
+            <li class="task-item"><span class="box"></span>Eşimle tiyatroya git</li>
+          </ul>
+        </div>
+
+      </div>
+    </div>
   </div>
 
   <script>
@@ -180,9 +236,7 @@
       const weekDays = ['Pt', 'Sa', 'Ça', 'Pe', 'Cu', 'Ct', 'Pz'];
 
       let table = '<table><tr>';
-      for (let d of weekDays) {
-        table += `<td><b>${d}</b></td>`;
-      }
+      for (let d of weekDays) table += `<td><b>${d}</b></td>`;
       table += '</tr><tr>';
 
       let day = 1;
@@ -218,7 +272,8 @@
         const data = await response.json();
         const tryRate = data.rates.TRY;
         const euroRate = (data.rates.TRY / data.rates.EUR);
-        document.getElementById('dollar').innerHTML = `💵 USD = ${tryRate.toFixed(2)} TRY<br><br>💶 EUR = ${euroRate.toFixed(2)} TRY`;
+        document.getElementById('dollar').innerHTML =
+          `💵 USD = ${tryRate.toFixed(2)} TRY<br><br>💶 EUR = ${euroRate.toFixed(2)} TRY`;
         document.getElementById('euro').textContent = "";
       } catch (error) {
         document.getElementById('dollar').textContent = 'Döviz alınamadı';
@@ -262,8 +317,9 @@
     ];
     function showQuote() {
       const randomIndex = Math.floor(Math.random() * quotes.length);
-      const quote = quotes[randomIndex];
-      document.getElementById('quote').innerHTML = `<div>${quote.en}</div><div>${quote.tr}</div><div><b>${quote.author}</b></div>`;
+      const q = quotes[randomIndex];
+      document.getElementById('quote').innerHTML =
+        `<div>${q.en}</div><div>${q.tr}</div><div><b>${q.author}</b></div>`;
     }
     showQuote();
 
@@ -303,34 +359,14 @@
       const randomWords = [];
       while (randomWords.length < 3) {
         const randomIndex = Math.floor(Math.random() * words.length);
-        const word = words[randomIndex];
-        if (!randomWords.includes(word)) {
-          randomWords.push(word);
-        }
+        const w = words[randomIndex];
+        if (!randomWords.includes(w)) randomWords.push(w);
       }
-      document.getElementById('word').innerHTML = randomWords.map(w => 
+      document.getElementById('word').innerHTML = randomWords.map(w =>
         `<div class="word-row"><div class="word-en">${w.en}</div><div class="word-tr">- ${w.tr}</div></div>`
       ).join('');
     }
     showWords();
-
-    async function fetchNews() {
-      try {
-        const response = await fetch('https://api.rss2json.com/v1/api.json?rss_url=https://www.ntv.com.tr/gundem.rss');
-        const data = await response.json();
-        const newsList = document.getElementById('newsList');
-        newsList.innerHTML = '';
-
-        data.items.slice(0, 3).forEach(item => {
-          const li = document.createElement('li');
-          li.textContent = item.title;
-          newsList.appendChild(li);
-        });
-      } catch (error) {
-        document.getElementById('newsList').innerHTML = '<li>Haberler alınamadı</li>';
-      }
-    }
-    fetchNews();
   </script>
 </body>
 </html>
